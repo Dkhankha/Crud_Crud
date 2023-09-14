@@ -7,7 +7,7 @@ function saveData(event){
         "name":name,
         "email":email
     }  
-   axios.post('https://crudcrud.com/api/cfabb4d7a35548378df0dec5560d5191/appointmentData',obj)
+   axios.post('https://crudcrud.com/api/4bfed86e5f0849d9ad449bbfb8a4fb35/appointmentData',obj)
    .then((response) => {
     showUsers(response.data)
     // console.log(response.id)
@@ -18,7 +18,7 @@ function saveData(event){
 });
 }
 window.addEventListener('DOMContentLoaded', () => {
-    axios.get('https://crudcrud.com/api/cfabb4d7a35548378df0dec5560d5191/appointmentData')
+    axios.get('https://crudcrud.com/api/4bfed86e5f0849d9ad449bbfb8a4fb35/appointmentData')
     .then((response) => {
        for(var i=0; i<response.data.length; i++){
         showUsers(response.data[i])
@@ -30,9 +30,16 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 
+function editUser(userId) {
+    // Get the updated user data from the form fields
+    const updatedName = document.getElementById('name').value;
+    const updatedEmail = document.getElementById('email').value;
+    deleteUser(userId)
+}
+
 function deleteUser(userId) {
     axios
-      .delete(`https://crudcrud.com/api/cfabb4d7a35548378df0dec5560d5191/appointmentData/${userId}`)
+      .delete(`https://crudcrud.com/api/4bfed86e5f0849d9ad449bbfb8a4fb35/appointmentData/${userId}`)
       .then((response) => {
         // Handle successful deletion (e.g., show a message)
         console.log(`User with ID ${userId} deleted successfully.`);
@@ -43,10 +50,6 @@ function deleteUser(userId) {
       });
   }
 
-//   function editUser() {
-//     axios.
-//   }
-  
 
 function showUsers(obj){
     let parentElem=document.getElementById('users');
@@ -67,6 +70,7 @@ function showUsers(obj){
     editbutton.value='Edit'
     editbutton.style.marginLeft = '5px'
     editbutton.onclick=()=>{
+        editUser(obj._id);
         parentElem.removeChild(childelem)
         document.getElementById('name').value=obj.name
         document.getElementById('email').value=obj.email
